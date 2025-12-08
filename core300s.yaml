@@ -96,7 +96,7 @@ sensor:
       float percent = (1 - ((float)min(cfmMin,maxCFMMin)/maxCFMMin))*100;
       //ESP_LOGI("main", "Percent [%f] max: [%d] current: [%d]  ", percent,maxCFMMin,cfmMin);
       return percent;
-    update_interval: 5s
+    update_interval: 30s
 
 text_sensor:
   # Expose WiFi information as sensors.
@@ -112,7 +112,7 @@ text_sensor:
       char buffer[16];
       snprintf(buffer, sizeof(buffer), "%dh %dm", rtHours, rtMin);
       return {std::string(buffer)};
-    update_interval: 5s 
+    update_interval: 30s 
 
 
 core300s:  
@@ -216,7 +216,7 @@ select:
       - Default
       - Quiet
       - Room Size
-    update_interval: 5s
+    update_interval: 30s
     lambda: !lambda |-
       auto fam = id(fan_auto_mode).state;
       if(fam=="Unknown" || fam=="") return std::string("Default");
