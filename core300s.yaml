@@ -1,7 +1,7 @@
 substitutions:
   name: "levoit-air-purifier"
   upper_name: Core300s
-  filterReplaceBelowPercent: 5
+  filterReplaceBelowPercent: 99.95
 
 esphome:
   name: ${name}
@@ -96,7 +96,7 @@ sensor:
       float percent = (1 - ((float)min(cfmMin,maxCFMMin)/maxCFMMin))*100;
       //ESP_LOGI("main", "Percent [%f] max: [%d] current: [%d]  ", percent,maxCFMMin,cfmMin);
       return percent;
-    update_interval: 30s
+    update_interval: 10s
 
 text_sensor:
   # Expose WiFi information as sensors.
@@ -112,7 +112,7 @@ text_sensor:
       char buffer[16];
       snprintf(buffer, sizeof(buffer), "%dh %dm", rtHours, rtMin);
       return {std::string(buffer)};
-    update_interval: 30s 
+    update_interval: 10s 
 
 
 core300s:  
@@ -216,7 +216,7 @@ select:
       - Default
       - Quiet
       - Room Size
-    update_interval: 30s
+    update_interval: 10s
     lambda: !lambda |-
       auto fam = id(fan_auto_mode).state;
       if(fam=="Unknown" || fam=="") return std::string("Default");
