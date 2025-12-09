@@ -1,7 +1,7 @@
 substitutions:
   name: "levoit-air-purifier"
   upper_name: Core300s
-  filterReplaceBelowPercent: 99.95
+  filterReplaceBelowPercent: 5
 
 esphome:
   name: ${name}
