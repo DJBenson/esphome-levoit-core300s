@@ -55,7 +55,8 @@ class Core300sComponent : public PollingComponent, public uart::UARTDevice {
   protected:
     sensor::Sensor *sensor_pm25;
     sensor::Sensor *sensor_room_size;
-    
+    sensor::Sensor *sensor_air_quality{nullptr};
+
     text_sensor::TextSensor *textsensor_fan_speed;
     text_sensor::TextSensor *textsensor_power;
     text_sensor::TextSensor *textsensor_mcu_fw;
