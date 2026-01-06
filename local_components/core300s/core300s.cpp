@@ -196,6 +196,13 @@ void Core300sComponent::process_packet()  {
             else
             defer("pub_pm", [=, this]()-> void {sensor_pm25->publish_state( (float) ((rx_buf[22]<<8) + rx_buf[21]) / 1.0); });
 
+            uint8_t air_quality = rx_buf[11];
+            defer("pub_air_quality", [=, this]()-> void {
+                if (this->sensor_air_quality != nullptr) {
+                    this->sensor_air_quality->publish_state(air_quality);
+                }
+            });
+            
             switch(rx_buf[23]) {  //Display Lock
                 case 0x00:
                 defer("pub_dl", [=, this]()-> void {textsensor_display_locked->publish_state("Unlocked"); });
