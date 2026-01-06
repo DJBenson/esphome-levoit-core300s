@@ -29,7 +29,7 @@ CONFIG_SCHEMA = cv.Schema({
     cv.Optional(CONF_SENSOR_ROOMSIZE):
         sensor.sensor_schema(accuracy_decimals=0).extend(),
 
-    cv.Optional(CONF_SENSOR_AIR_QUALITY): sensor.sensor_schema():
+    cv.Optional(CONF_SENSOR_AIR_QUALITY):
         sensor.sensor_schema(accuracy_decimals=0).extend(),
     
     cv.Optional(CONF_TEXTSENSOR_FAN_SPEED):
@@ -71,8 +71,9 @@ def to_code(config):
         cg.add(var.set_room_size_sensor(sens))
 
     if CONF_SENSOR_AIR_QUALITY in config:
-        sens = await sensor.new_sensor(config[CONF_SENSOR_AIR_QUALITY])
-        cg.add(var.sensor_air_quality = sens)
+        conf = config[CONF_SENSOR_AIR_QUALITY] 
+        sens = yield sensor.new_sensor(conf)
+        cg.add(var.set_air_quality_sensor(sens))
     
     if CONF_TEXTSENSOR_FAN_SPEED in config:
         conf = config[CONF_TEXTSENSOR_FAN_SPEED]
