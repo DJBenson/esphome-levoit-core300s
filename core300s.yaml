@@ -138,6 +138,9 @@ core300s:
     name: ${upper_name} Room Size
     icon: mdi:axis-arrow
     internal: true
+  air_quality:
+    name: "${upper_name} Air Quality"
+    icon: mdi:air-filter
   power:
     name: ${upper_name} Power
     id: fan_power
