@@ -1,10 +1,11 @@
 substitutions:
   name: "levoit-air-purifier"
-  upper_name: Core300s
+  upper_name: Levoit Core 300S
   filterReplaceBelowPercent: 5
 
 esphome:
   name: ${name}
+  friendly_name: ${upper_name}
   project: 
     name: "Levoit.Core300s"
     version: "2.1.0"
@@ -34,16 +35,17 @@ wifi:
       password: !secret wifi_password
   ap:
     ssid: "Levoit-Core300S Fallback Hotspot"
-    password: !secret wifi_ap_password
+    password: !secret ap_password
 
 # Sync time with Home Assistant.
 time:
   - platform: homeassistant
     id: homeassistant_time
 
-
 external_components:
-  - source: local_components
+  - source:
+      type: local
+      path: components
     components: [core300s]
 
 uart:
@@ -290,7 +292,7 @@ script:
           
           bool power_template = id(temp_fan).state;
           auto speed_template = id(temp_fan).speed;
-          auto mode_template = id(temp_fan).preset_mode;
+          std::string mode_template = id(temp_fan).get_preset_mode();
           
           bool power = (id(fan_power).state == "On");
           auto speed_text = id(fan_speed).state;
@@ -359,7 +361,7 @@ script:
       - lambda: |-
           //
           auto mode_text = id(fan_mode).state;
-          auto mode_template = id(temp_fan).preset_mode;
+          std::string mode_template = id(temp_fan).get_preset_mode();
           if( mode_text!=mode_template && mode_template!=""){
             id(core300s_ID)->power_on();
             if(mode_template=="Manual") id(core300s_ID)->set_fan_mode_manual();
